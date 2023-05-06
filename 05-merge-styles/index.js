@@ -1,20 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
-const stylesArray = [];
+const stylePath = path.join(__dirname, 'project-dist', 'bundle.css');
 const dirPath = path.join(__dirname, 'styles');
-const filesArr = fs.readdirSync(dirPath, {withFileTypes: true})
 
-filesArr.forEach((file) => {
+fs.readdir(dirPath, {withFileTypes: true }, (err, files) => {
+  files.forEach(file => {
     if(file.isDirectory()) return
     const curPath = path.join(__dirname, 'styles', file.name);
     if(path.extname(curPath) !== '.css') return
-    stylesArray.push(fs.readFileSync(curPath, { encoding: 'utf-8' }))
+    const readableStream = fs.createReadStream(curPath);
+    readableStream.on('data', (data) => {
+        fs.appendFile(stylePath, data, err => {
+          if (err) console.log(err)
+        })
+    })
+  })
+  
 });
-
-const stylePath = path.join(__dirname, 'project-dist', 'bundle.css');
-const output = fs.createWriteStream(stylePath);
-
-stylesArray.forEach((component) => {
-    output.write(component);
-})
