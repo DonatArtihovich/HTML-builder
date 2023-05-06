@@ -5,6 +5,7 @@ const stylePath = path.join(__dirname, 'project-dist', 'bundle.css');
 const dirPath = path.join(__dirname, 'styles');
 
 fs.readdir(dirPath, {withFileTypes: true }, (err, files) => {
+  if (err) console.log(err)
   files.forEach(file => {
     if(file.isDirectory()) return
     const curPath = path.join(__dirname, 'styles', file.name);
@@ -16,5 +17,4 @@ fs.readdir(dirPath, {withFileTypes: true }, (err, files) => {
         })
     })
   })
-  
 });
