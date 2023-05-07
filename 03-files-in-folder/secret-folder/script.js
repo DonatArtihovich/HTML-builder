@@ -4,6 +4,7 @@ const { stdout } = process;
 
 const dirPath = path.join(__dirname, 'secret-folder');
 fs.readdir(dirPath, { withFileTypes: true }, (err, data) => {
+  if (err) console.log(err);
   data.forEach(d => {
     if(d.isDirectory()) return;
     const filePath = path.join(__dirname, 'secret-folder', d.name);
