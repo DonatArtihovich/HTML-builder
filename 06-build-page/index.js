@@ -26,6 +26,7 @@ fs.readdir(componentsDir, (err, files) => {
 function changeFile() {
   const templatePath = path.join(__dirname, 'template.html');
   const indexPath = path.join(__dirname, 'project-dist', 'index.html');
+  const writeStream = fs.createWriteStream(indexPath);
   fs.readFile(templatePath, 'utf-8', (err, data) => {
     if (err) console.log(err);
     const templatesArr = data.match(/{{.*}}/g);
@@ -35,14 +36,8 @@ function changeFile() {
       const keyStr = str.slice(2, -2);
       const subStr = templatesObject[keyStr];
       outStr = outStr.replace(str, subStr);
-      fs.writeFile(indexPath, '', err => {
-        if (err) console.log(err);
-        fs.writeFile(indexPath, outStr, err => {
-          if (err) console.log(err);
-        });
-      });
-
     });
+    writeStream.write(outStr);
   });
 }
 
