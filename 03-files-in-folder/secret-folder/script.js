@@ -10,6 +10,7 @@ fs.readdir(dirPath, { withFileTypes: true }, (err, data) => {
     const fileName = d.name.split('.')[0];
     const fileExtension = d.name.split('.')[1];
     fs.stat(filePath, (err, stats) => {
+      if (err) console.log(err);
       const fileSize = stats.size/1000 + 'Кб';
       stdout.write(fileName + ' - ' + fileExtension + ' - ' + fileSize + '\n');
     });
