@@ -7,8 +7,8 @@ const writeStream = fs.createWriteStream(filePath);
 
 stdout.write('Будь как дома, путник, я ни в чем не откажу. Введи текст, я запишу!\n');
 stdin.on('data', data => {
-    if(data.toString().trim() === 'exit') process.exit()
-    writeStream.write(data)
+  if(data.toString().trim() === 'exit') process.exit();
+  writeStream.write(data);
 });
 
 process.on('SIGINT', () => process.exit());
