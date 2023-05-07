@@ -15,4 +15,4 @@ fs.readdir(dirPath, { withFileTypes: true }, (err, data) => {
       stdout.write(fileName + ' - ' + fileExtension + ' - ' + fileSize + '\n');
     });
   });
-});    
+});
