@@ -11,12 +11,16 @@ fs.readdir(componentsDir, (err, files) => {
   }
 
   const projectPath = path.join(__dirname, 'project-dist');
-  fs.mkdir(projectPath, err => {
-    if (err) {
-      console.log(err);
-      process.exit();
+  fs.stat(projectPath, err => {
+    if(err) {
+      fs.mkdir(projectPath, err => {
+        if (err) {
+          console.log(err);
+          process.exit();
+        }
+      })
     }
-
+  
     joinStyles();
     copyDir();
     files.forEach(f => {
@@ -49,7 +53,7 @@ function changeFile() {
     }
 
     let outStr = data;
-    const templatesArr = data.match(/{{.*}}/g);
+    const templatesArr = data.match(/{{([^{}]+)}}/g);
     if (!templatesArr) return;
 
     templatesArr.forEach(str => {
