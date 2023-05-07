@@ -5,7 +5,10 @@ const stylePath = path.join(__dirname, 'project-dist', 'bundle.css');
 const dirPath = path.join(__dirname, 'styles');
 
 fs.readdir(dirPath, {withFileTypes: true }, (err, files) => {
-  if (err) console.log(err);
+  if (err) {
+    console.log(err);
+    process.exit();
+  }
   files.forEach(file => {
     if(file.isDirectory()) return;
     const curPath = path.join(__dirname, 'styles', file.name);
@@ -13,7 +16,10 @@ fs.readdir(dirPath, {withFileTypes: true }, (err, files) => {
     const readableStream = fs.createReadStream(curPath);
     readableStream.on('data', (data) => {
       fs.appendFile(stylePath, data, err => {
-        if (err) console.log(err);
+        if (err) {
+          console.log(err);
+          process.exit();
+        }
       });
     });
   });
