@@ -24,6 +24,7 @@ fs.readdir(componentsDir, (err, files) => {
     joinStyles();
     copyDir();
     files.forEach(f => {
+      if(path.extname(f) !== '.html') return;
       const curPath = path.join(componentsDir, f);
       const curName = f.split('.')[0];
 
