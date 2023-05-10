@@ -11,8 +11,8 @@ fs.readdir(dirPath, { withFileTypes: true }, (err, data) => {
   data.forEach(d => {
     if(d.isDirectory()) return;
     const filePath = path.join(__dirname, 'secret-folder', d.name);
-    const fileName = d.name.split('.')[0];
-    const fileExtension = d.name.split('.')[1];
+    const fileName = path.basename(d.name).split('.').slice(0, path.basename(d.name).split('.').length - 1).join('.');
+    const fileExtension = path.extname(d.name)
     fs.stat(filePath, (err, stats) => {
       if (err) {
         console.log(err);
